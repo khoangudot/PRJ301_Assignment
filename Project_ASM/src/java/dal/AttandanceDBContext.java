@@ -6,7 +6,10 @@ package dal;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Attandance;
 import model.Session;
 import model.Student;
@@ -45,9 +48,9 @@ public class AttandanceDBContext extends DBContext<Attandance> {
                 
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            Logger.getLogger(AttandanceDBContext.class.getName()).log(Level.SEVERE, null,e);
         }
-
         return attandances;
     }
 
