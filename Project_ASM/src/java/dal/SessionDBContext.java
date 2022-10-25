@@ -4,6 +4,7 @@
  */
 package dal;
 
+import Models.Attandance;
 import Models.Group;
 import Models.Lecturer;
 import Models.Room;
@@ -99,4 +100,58 @@ public class SessionDBContext extends DBContext<Session> {
         return null;
     }
 
+    public void UpdateAttandance(Session model) {
+        try {
+            connection.setAutoCommit(false);
+            String sqlUpdate = "UPDATE [dbo].[Session]\n"
+                    + "   SET [attanded] = 1\n"
+                    + " WHERE sessionID = ?";
+            PreparedStatement stmUpdate = connection.prepareStatement(sqlUpdate);
+            stmUpdate.setInt(1, model.getSessionId());
+            stmUpdate.executeUpdate();
+            //remove old attandance
+            String sqlDelete = "DELETE FROM [dbo].[Attandance]\n"
+                    + "      WHERE sessionID = ?";
+            PreparedStatement stmDelete = connection.prepareStatement(sqlDelete);
+            stmDelete.setInt(1, model.getSessionId());
+            stmDelete.executeUpdate();
+            //Add new attandance
+            for (Attandance attandance : model.getAttandances()) {
+                String sqlInsert = "INSERT INTO [dbo].[Attandance]\n"
+                        + "           ([sessionID]\n"
+                        + "           ,[studentID]\n"
+                        + "           ,[present]\n"
+                        + "           ,[description]\n"
+                        + "           ,[RecordTime])\n"
+                        + "     VALUES\n"
+                        + "           (?\n"
+                        + "           ,?\n"
+                        + "           ,?\n"
+                        + "           ,?\n"
+                        + "           ,GETDATE())";
+                PreparedStatement stmInsert =  connection.prepareStatement(sqlInsert);
+                stmInsert.setInt(1,model.getSessionId());
+                stmInsert.setString(2, attandance.getStudent().getStudentId());
+                stmInsert.setBoolean(3, attandance.isPresent());
+                stmInsert.setString(4, attandance.getDescription());
+                stmInsert.executeUpdate();
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                java.util.logging.Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            java.util.logging.Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, e);
+        }
+        finally{
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                java.util.logging.Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+               
+    }
 }

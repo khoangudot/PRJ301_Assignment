@@ -7,6 +7,7 @@ package Controllers;
 
 import Models.Attandance;
 import Models.Session;
+import Models.Student;
 import dal.AttandanceDBContext;
 import dal.SessionDBContext;
 import java.io.IOException;
@@ -40,7 +41,23 @@ public class TakeAttandanceController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        Session session = new Session();
+        session.setSessionId(Integer.parseInt(request.getParameter("sessionId"))) ;
         
+        String[] studentIds = request.getParameterValues("studentId");
+        for(String studentId: studentIds){
+            Attandance attandance = new Attandance();
+            Student student =  new Student();
+            attandance.setStudent(student);
+            attandance.setSession(session);
+            student.setStudentId(studentId);
+            attandance.setPresent(request.getParameter("present"+studentId).equals("attended"));
+            attandance.setDescription(request.getParameter("description"+studentId));
+            session.getAttandances().add(attandance);
+        }
+        SessionDBContext sessionDB =  new SessionDBContext();
+        sessionDB.UpdateAttandance(session);
+        response.sendRedirect("takeatt?sessionId="+session.getSessionId());
     }
 
     @Override

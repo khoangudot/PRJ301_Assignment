@@ -42,22 +42,29 @@
         </nav>
         <div class="container">
             <h1>Single Activity Attendance</h1>
-            <p >Attendance for <b>Session ${requestScope.session.index}</b> with Lecturer <b>${requestScope.session.lecturer.lecturerId}
-                </b> at Slot <b>${requestScope.session.timeSlot.id}</b> on Day <b>${requestScope.session.date}
-                </b> in Room <b>${requestScope.session.room.roomName}</b> at FU-HL</p>
-            <div style="width: 100%;">
-                <form action="takeatt" style="position: relative;padding-bottom: 50px;" method="post">
+            <p >Attendance for <b>Session ${requestScope.session.index}</b>
+                <b>Subject: ${requestScope.session.group.subject.subjectName}</b>
+                with Lecturer <b>${requestScope.session.lecturer.lecturerId}</b> 
+                at <b>Slot ${requestScope.session.timeSlot.id}</b> 
+                on  <b>Day ${requestScope.session.date}</b> 
+                in <b> Room ${requestScope.session.room.roomName}</b> 
+                <b>Group: ${requestScope.session.group.groupName}</b>
+                <b>at FU-HL</b></p><br/>
 
+            <div style="width: 100%;">
+
+                <form action="takeatt" style="position: relative;padding-bottom: 50px;" method="post">
+                    <input type="hidden" name="sessionId" value="${param.sessionId}">
                     <table class="table" border="1" >
                         <thead>
+
                             <tr>
                                 <th style="width:5%">Index</th>
-                                <th style="width:5%">Group</th>
                                 <th style="width:10%">Code</th>
                                 <th style="width:17.5%">Name</th>
                                 <th style="width:12.5%">Image</th>
-                                <th style="width:15%">Status</th>
-                                <th style="width:10%">Commnent</th>
+                                <th style="width:20%">Status</th>
+                                <th style="width:10%">Comment</th>
                                 <th style="width:5%">Taker</th>
                                 <th style="width:20%">RecordTime</th>
                             </tr>
@@ -66,30 +73,43 @@
 
                         <tbody>
 
-                            <% int no  = 1;%>
+                            <c:set var="no" value="${0}"/>
                             <c:forEach items="${requestScope.attandances}" var="a">
+                                <c:set var="no" value="${no +1}"/>
                                 <tr>
-                                    <td style="width: 5%">index</td>
-                                    <td style="width:10%">${requestScope.session.group.groupName}    </td>
-                                    <td style="width:10%">${a.student.studentId}</td>
+                                    <td style="width: 5%">${no}</td>
+                                    <td style="width:10%">${a.student.studentId}
+                                        <input type="hidden" value="${a.student.studentId}" name="studentId">
+                                    </td>
                                     <td style="width:12.5%">${a.student.studentName}</td>
                                     <td style="width:12.5%"><img src= "${a.student.image}" width="120px"></td>
-                                    <td style="width: 15%">    
-                                        <input type="radio" name="takeAtt"  value="" checked="1"/>absent
-                                        <input type="radio" name="takeAtt"   value=""/>attend
+                                    <td style="width: 20%">    
+                                        <input type="radio" 
+                                               <c:if test="${a.present}">
+                                                   checked="checked"
+                                               </c:if>
+                                               name="present${a.student.studentId}"
+                                               value="attended"
+                                               />Attend
+                                        <input type="radio"
+                                               <c:if test="${!a.present}">
+                                                   checked="checked"
+                                               </c:if>
+                                               name="present${a.student.studentId}"
+                                               value="absent"
+                                               >Absent
                                     </td>
-                                    <td style="width:10%"></td>
-                                    <td style="width:5%">sonnt</td>    
+                                    <td style="width:10%">
+                                        <input style="border-top-style: hidden; border-bottom-style: groove; border-left-style: hidden; border-right-style: hidden; background-color: #eee" 
+                                               type="" name="description${a.student.studentId}" value="${a.description}">
+                                    </td>
+                                    <td style="width:5%">${requestScope.session.attanded ? requestScope.session.lecturer.lecturerId: "No"}</td>    
                                     <td style="width:20%"></td>
                                 </tr>
                             </c:forEach>
-
-
-
-
-                        <input style="position: absolute; bottom: 5px; right: 0;" type="submit" value="Submit" style="align-items: flex-end" class="btn btn-primary">
                         </tbody>
                     </table>
+                    <input style="position: absolute; bottom: 5px; right: 0;" type="submit" value="Submit" style="align-items: flex-end" class="btn btn-primary">
                 </form>
 
             </div>
