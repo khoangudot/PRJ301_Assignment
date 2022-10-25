@@ -10,9 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Attandance;
-import model.Session;
-import model.Student;
+import Models.Attandance;
+import Models.Session;
+import Models.Student;
 
 /**
  *
@@ -23,7 +23,7 @@ public class AttandanceDBContext extends DBContext<Attandance> {
     public ArrayList<Attandance> getAttandancesBySessionId(int sessionId) {
         ArrayList<Attandance> attandances = new ArrayList<>();
         try {
-            String sql = "select ses.sessionID, std.studentID,std.studentName, \n"
+            String sql = "select ses.sessionID, std.studentID,std.studentName,std.image, \n"
                     + "ISNULL(att.present,0) Present,ISNULL(att.[description],'') [Description] \n"
                     + "from [Session] ses \n"
                     + "INNER JOIN [Group] gr ON ses.groupID = gr.groupID \n"
@@ -31,7 +31,9 @@ public class AttandanceDBContext extends DBContext<Attandance> {
                     + "INNER JOIN Student std ON sg.studentID = std.studentID\n"
                     + "LEFT JOIN Attandance att ON ses.sessionID = att.sessionID AND att.studentID = std.studentID\n"
                     + "WHERE ses.sessionID = ?";
+            
             PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, sessionId);
             ResultSet rs = stm.executeQuery();
             while(rs.next()){
                 Attandance attandance =  new Attandance();
@@ -43,6 +45,7 @@ public class AttandanceDBContext extends DBContext<Attandance> {
                 attandance.setDescription(rs.getString("description"));
                 student.setStudentId(rs.getString("studentID"));
                 student.setStudentName(rs.getString("studentName"));
+                student.setImage(rs.getString("image"));
                 session.setSessionId(sessionId);
                 attandances.add(attandance);
                 
