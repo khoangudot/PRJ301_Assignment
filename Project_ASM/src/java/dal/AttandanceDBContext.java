@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import Models.Attandance;
 import Models.Session;
 import Models.Student;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  *
@@ -24,7 +26,7 @@ public class AttandanceDBContext extends DBContext<Attandance> {
         ArrayList<Attandance> attandances = new ArrayList<>();
         try {
             String sql = "select ses.sessionID, std.studentID,std.studentName,std.image, \n"
-                    + "ISNULL(att.present,0) Present,ISNULL(att.[description],'') [Description] \n"
+                    + "ISNULL(att.present,0) Present,ISNULL(att.[description],'') [Description],att.RecordTime \n"
                     + "from [Session] ses \n"
                     + "INNER JOIN [Group] gr ON ses.groupID = gr.groupID \n"
                     + "INNER JOIN Student_Group sg ON gr.groupID = sg.groupID\n"
@@ -43,6 +45,9 @@ public class AttandanceDBContext extends DBContext<Attandance> {
                 attandance.setSession(session);
                 attandance.setPresent(rs.getBoolean("present"));
                 attandance.setDescription(rs.getString("description"));
+                Timestamp timestamp = rs.getTimestamp("RecordTime");
+                java.util.Date recordTime = new Date(timestamp.getTime());
+                attandance.setRecordTime(recordTime);
                 student.setStudentId(rs.getString("studentID"));
                 student.setStudentName(rs.getString("studentName"));
                 student.setImage(rs.getString("image"));

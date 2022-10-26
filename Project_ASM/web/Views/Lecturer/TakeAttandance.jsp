@@ -104,7 +104,7 @@
                                                type="" name="description${a.student.studentId}" value="${a.description}">
                                     </td>
                                     <td style="width:5%">${requestScope.session.attanded ? requestScope.session.lecturer.lecturerId: "No"}</td>    
-                                    <td style="width:20%"></td>
+                                    <td style="width:20%">${a.recordTime}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
