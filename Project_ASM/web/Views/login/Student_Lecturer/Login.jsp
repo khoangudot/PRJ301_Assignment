@@ -61,7 +61,7 @@
 
                 <div class="container">
 
-                    <form action="" method="">
+                    <form action="../../../Login" method="post">
                         <center>
                             <fieldset >
                                 <legend><b>Người dùng đăng nhập (Donor Login)</b></legend>

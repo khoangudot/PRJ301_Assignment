@@ -13,8 +13,7 @@ public class Account {
     private String username;
     private String password;
     private String displayname;
-    private String roles;
-
+    
     public String getUsername() {
         return username;
     }
@@ -39,13 +38,7 @@ public class Account {
         this.displayname = displayname;
     }
 
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
-    }
+ 
     
 
 }
