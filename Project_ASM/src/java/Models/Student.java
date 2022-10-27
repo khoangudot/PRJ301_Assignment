@@ -21,6 +21,24 @@ public class Student {
     private String image;
     ArrayList<Group> groups = new ArrayList<>();
     ArrayList<Attandance> attandances = new ArrayList<>();
+    private Account account;
+
+    public ArrayList<Attandance> getAttandances() {
+        return attandances;
+    }
+
+    public void setAttandances(ArrayList<Attandance> attandances) {
+        this.attandances = attandances;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+   
 
     public ArrayList<Group> getGroups() {
         return groups;

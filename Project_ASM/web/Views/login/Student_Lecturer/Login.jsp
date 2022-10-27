@@ -88,7 +88,7 @@
                                         <tr>
                                             <td>PassWord:</td>
                                             <td>
-                                                <input type="text" name="password"  placeholder="Password" /></td>
+                                                <input type="password" name="password"  placeholder="Password" /></td>
                                         </tr>
 
                                         <tr>

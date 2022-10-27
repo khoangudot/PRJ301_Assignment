@@ -4,6 +4,8 @@
  */
 package Models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author MrKhoaz
@@ -12,7 +14,16 @@ public class Account {
 
     private String username;
     private String password;
-    private String displayname;
+    private ArrayList<Role> roles = new ArrayList<>();
+
+    public ArrayList<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(ArrayList<Role> roles) {
+        this.roles = roles;
+    }
+    
     
     public String getUsername() {
         return username;
@@ -30,13 +41,7 @@ public class Account {
         this.password = password;
     }
 
-    public String getDisplayname() {
-        return displayname;
-    }
 
-    public void setDisplayname(String displayname) {
-        this.displayname = displayname;
-    }
 
  
     

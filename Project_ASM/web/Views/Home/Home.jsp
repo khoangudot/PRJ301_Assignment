@@ -69,7 +69,7 @@
 
                     <div id="ctl00_divUser" style="float: right; margin-right: 16px;">
                         <a href="?view=user">
-                            <span id="ctl00_lblLogIn" class="label label-success">khoanvhe153692</span></a> | <a href="?logout=true" class="label label-success">logout</a> |
+                            <span id="ctl00_lblLogIn" class="label label-success">${sessionScope.account.username}</span></a> | <a href="?logout=true" class="label label-success">logout</a> |
                         <span id="ctl00_lblCampusName" class="label label-success"> CAMPUS: FPTU-Hòa Lạc</span>
                     </div>
                     <ol class="breadcrumb">

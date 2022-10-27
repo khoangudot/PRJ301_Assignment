@@ -15,6 +15,15 @@ public class Lecturer {
     private String lecturerName;
     ArrayList<Group> groups =  new ArrayList<>();
     ArrayList<Session> sessions =  new ArrayList<>();
+    private  Account account;
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
     public String getLecturerId() {
         return lecturerId;

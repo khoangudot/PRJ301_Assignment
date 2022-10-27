@@ -1,3 +1,10 @@
+<%-- 
+    Document   : Default
+    Created on : Oct 27, 2022, 3:37:09 PM
+    Author     : MrKhoaz
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -107,7 +114,7 @@
                                                                         <option value="7">FU-Quy Nhơn</option>
                                                                     </select>
                                                                     <div style="margin-top: -62px; margin-left: 165px">
-                                                                        <a href="Views/login/Student_Lecturer/Login.jsp">
+                                                                        <a href="../../Views/login/Student_Lecturer/Login.jsp">
                                                                             <h3>
                                                                                 <span class="btn btn-primary"><b>Sign In</b></span></h3>
                                                                         </a>

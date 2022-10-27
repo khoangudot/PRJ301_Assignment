@@ -32,7 +32,7 @@ public class LoginController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
            
-            request.getRequestDispatcher("Views/login/Default.html").forward(request, response);
+            request.getRequestDispatcher("Views/login/Default.jsp").forward(request, response);
         }
     } 
 
@@ -65,6 +65,7 @@ public class LoginController extends HttpServlet {
         AccountDBContext accDB = new AccountDBContext();
         Account account =  accDB.getAccount(username, password);
         if(account != null){
+            request.getSession().setAttribute("account", account);
             response.sendRedirect("Views/Home/Home.jsp");
         }
         else{
