@@ -10,23 +10,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head><meta http-equiv="X-UA-Compatible" content="IE=Edge" /><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" /><title>
             FPT University Academic Portal
-        </title><link rel="Stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" type="text/css" /><link rel="Stylesheet" href="fu.css" type="text/css" /><link rel="Stylesheet" href="JavaScript/jquery.css" type="text/css" /><link rel="Stylesheet" href="JavaScript/jquery-ui.css" type="text/css" /><link rel="Stylesheet" href="JavaScript/jquery.alerts.css" type="text/css" />
+        </title><link rel="Stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" type="text/css" />
+        <link rel="Stylesheet" href="../Style/fu.css" type="text/css" />
+        <link rel="Stylesheet" href="../Style/JavaScript/jquery.css" type="text/css" />
+        <link rel="Stylesheet" href="../Style/JavaScript/jquery-ui.css" type="text/css" />
+        <link rel="Stylesheet" href="../Style/JavaScript/jquery.alerts.css" type="text/css" />
 
-        <script src="../JavaScript/jquery.min.js" type="text/javascript"></script>
+        <script src="../Style/JavaScript/jquery.min.js" type="text/javascript"></script>
 
-        <script src="../JavaScript/jquery_002.js" type="text/javascript"></script>
+        <script src="../Style/JavaScript/jquery_002.js" type="text/javascript"></script>
 
-        <script src="../JavaScript/jquery_003.js" type="text/javascript"></script>
+        <script src="../Style/JavaScript/jquery_003.js" type="text/javascript"></script>
 
-        <script src="../JavaScript/jquery.js" type="text/javascript"></script>
+        <script src="../Style/JavaScript/jquery.js" type="text/javascript"></script>
 
-        <script src="../JavaScript/jquery-1.8.3.js" type="text/javascript"></script>
+        <script src="../Style/JavaScript/jquery-1.8.3.js" type="text/javascript"></script>
 
-        <script src="../JavaScript/jquery-ui.js" type="text/javascript"></script>
+        <script src="../Style/JavaScript/jquery-ui.js" type="text/javascript"></script>
 
-        <script src="../JavaScript/jquery.alerts.js" type="text/javascript"></script>
+        <script src="../Style/JavaScript/jquery.alerts.js" type="text/javascript"></script>
 
-        <link rel="Stylesheet" href="Content/bootstrap.css" type="text/css" /><link rel="Stylesheet" href="Content/bootstrap.min.css" type="text/css" /><link rel="Stylesheet" href="Content/bootstrap-theme.min.css" type="text/css" />
+        <link rel="Stylesheet" href="../Style/Content/bootstrap.css" type="text/css" />
+        <link rel="Stylesheet" href="../Style/Content/bootstrap.min.css" type="text/css" />
+        <link rel="Stylesheet" href="../Style/Content/bootstrap-theme.min.css" type="text/css" />
 
         <style type="text/css">
             .style1 {
