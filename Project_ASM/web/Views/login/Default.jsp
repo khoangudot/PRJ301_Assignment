@@ -14,29 +14,23 @@
     <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
         <head><meta http-equiv="X-UA-Compatible" content="IE=Edge" /><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" /><title>
                 FPT University Academic Portal
-            </title><link rel="Stylesheet" href="../cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" type="text/css" />
-            <link rel="Stylesheet" href="..//Style/fu.css" type="text/css" />
-            <link rel="Stylesheet" href="../Style/JavaScript/jquery.css" type="text/css" />
-            <link rel="Stylesheet" href="../Style/JavaScript/jquery-ui.css" type="text/css" />
-            <link rel="Stylesheet" href="../Style/JavaScript/jquery.alerts.css" type="text/css" />
+            </title><link rel="Stylesheet" href="../cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" type="text/css" /><link rel="Stylesheet" href="fu.css" type="text/css" /><link rel="Stylesheet" href="JavaScript/jquery.css" type="text/css" /><link rel="Stylesheet" href="JavaScript/jquery-ui.css" type="text/css" /><link rel="Stylesheet" href="JavaScript/jquery.alerts.css" type="text/css" />
 
-            <script src="../Style/JavaScript/jquery.min.js" type="text/javascript"></script>
+            <script src="JavaScript/jquery.min.js" type="text/javascript"></script>
 
-            <script src="../Style/JavaScript/jquery_002.js" type="text/javascript"></script>
+            <script src="JavaScript/jquery_002.js" type="text/javascript"></script>
 
-            <script src="../Style/JavaScript/jquery_003.js" type="text/javascript"></script>
+            <script src="JavaScript/jquery_003.js" type="text/javascript"></script>
 
-            <script src="../Style/JavaScript/jquery.js" type="text/javascript"></script>
+            <script src="JavaScript/jquery.js" type="text/javascript"></script>
 
-            <script src="../Style/../Style/JavaScript/jquery-1.8.3.js" type="text/javascript"></script>
+            <script src="JavaScript/jquery-1.8.3.js" type="text/javascript"></script>
 
-            <script src="../Style/JavaScript/jquery-ui.js" type="text/javascript"></script>
+            <script src="JavaScript/jquery-ui.js" type="text/javascript"></script>
 
-            <script src="../Style/JavaScript/jquery.alerts.js" type="text/javascript"></script>
+            <script src="JavaScript/jquery.alerts.js" type="text/javascript"></script>
 
-            <link rel="Stylesheet" href="../Style/Content/bootstrap.css" type="text/css" />
-            <link rel="Stylesheet" href="../Style/Content/bootstrap.min.css" type="text/css" />
-            <link rel="Stylesheet" href="../Style/Content/bootstrap-theme.min.css" type="text/css" />
+            <link rel="Stylesheet" href="Content/bootstrap.css" type="text/css" /><link rel="Stylesheet" href="Content/bootstrap.min.css" type="text/css" /><link rel="Stylesheet" href="Content/bootstrap-theme.min.css" type="text/css" />
 
             <style type="text/css">
                 .style1 {
@@ -65,9 +59,9 @@
                             </tr>
                             <tr>
                                 <td><a href="https://apps.apple.com/app/id1527723314">
-                                        <img src="../Style/images/app-store.svg" style="width: 120px; height: 40px" alt="apple store" /></a></td>
+                                        <img src="images/app-store.svg" style="width: 120px; height: 40px" alt="apple store" /></a></td>
                                 <td><a href="https://play.google.com/store/apps/details?id=com.fuct">
-                                        <img src="../Style/images/play-store.svg" style="width: 120px; height: 40px" alt="google store" /></a></td>
+                                        <img src="images/play-store.svg" style="width: 120px; height: 40px" alt="google store" /></a></td>
 
                             </tr>
                         </table>

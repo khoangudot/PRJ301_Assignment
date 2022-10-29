@@ -61,7 +61,7 @@
 
                 <div class="container">
 
-                    <form action="../../../Login" method="post">
+                    <form action="" method="">
                         <center>
                             <fieldset >
                                 <legend><b>Người dùng đăng nhập (Donor Login)</b></legend>
@@ -88,7 +88,7 @@
                                         <tr>
                                             <td>PassWord:</td>
                                             <td>
-                                                <input type="password" name="password"  placeholder="Password" /></td>
+                                                <input type="text" name="password"  placeholder="Password" /></td>
                                         </tr>
 
                                         <tr>

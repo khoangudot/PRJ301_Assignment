@@ -62,7 +62,7 @@ public class TimeTableController extends HttpServlet {
         request.setAttribute("timeSlots", timeSlots);
         
         SessionDBContext sessionDB =  new SessionDBContext();
-        ArrayList<Session> sessions =  sessionDB.filterSession(lecturerId, from, to);
+        ArrayList<Session> sessions =  sessionDB.filterSessionForLecturerTimeTable(lecturerId, from, to);
         request.setAttribute("sessions", sessions);
         
         LecturerDBContext lecturerDB = new LecturerDBContext();

@@ -32,7 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Time Table </a>
+                        <a class="nav-link" href="../timetable?lecturerId=${requestScope.session.lecturer.lecturerId}">Time Table </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">List Student</a>

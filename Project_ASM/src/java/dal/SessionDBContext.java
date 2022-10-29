@@ -9,6 +9,7 @@ import Models.Group;
 import Models.Lecturer;
 import Models.Room;
 import Models.Session;
+import Models.Student;
 import Models.Subject;
 import Models.TimeSlot;
 
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -155,7 +157,7 @@ public class SessionDBContext extends DBContext<Session> {
 
     }
 
-    public ArrayList<Session> filterSession(String lecturerId, Date from, Date to) {
+    public ArrayList<Session> filterSessionForLecturerTimeTable(String lecturerId, Date from, Date to) {
         ArrayList<Session> sessions = new ArrayList<>();
         String sql = "select ses.sessionID,ses.[date],ses.[index],ses.attanded, \n"
                 + "l.lectureID,l.lectureName,l.username,g.groupID,g.groupName,\n"
@@ -208,13 +210,84 @@ public class SessionDBContext extends DBContext<Session> {
                 session.setLecturer(lecturer);
                 session.setRoom(room);
                 session.setTimeSlot(timeSlot);
-                
+
                 sessions.add(session);
 
             }
             return sessions;
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+    public ArrayList<Session> filterSessionForStudentTimeTable(String studentId, Date from, Date to) {
+        ArrayList<Session> sessions =  new ArrayList<>();
+        try {
+            String sql = "select ses.sessionID,ses.[date],ses.[index],ses.attanded,\n"
+                    + "                l.lectureID,l.lectureName,l.username,g.groupID,g.groupName,\n"
+                    + "                sub.subjectID,sub.subjectName,\n"
+                    + "                r.roomName,g.groupName,ts.timeSlotID,ts.[description],\n"
+                    + "				s.studentID, s.studentName\n"
+                    + "                from [Session] ses\n"
+                    + "                INNER JOIN Lecturer l ON ses.lectureID = l.lectureID\n"
+                    + "                INNER JOIN Room r ON ses.roomID = r.roomID\n"
+                    + "                INNER JOIN [Group] g ON g.groupID = ses.groupID\n"
+                    + "                INNER JOIN [Subject] sub ON sub.subjectID = g.subjectID\n"
+                    + "                INNER JOIN TimeSlot ts ON ts.timeSlotID = ses.timeSlotID\n"
+                    + "				INNER JOIN Student_Group sg ON  g.groupID = sg.groupID\n"
+                    + "				INNER JOIN Student s ON s.studentID = sg.studentID\n"
+                    + "                where s.studentID = ?\n"
+                    + "                AND ses.[date] >= ?\n"
+                    + "                AND ses.[date] <= ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, studentId);
+            stm.setDate(2, (java.sql.Date) from);
+            stm.setDate(3, (java.sql.Date) to);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Session session = new Session();
+                Lecturer lecturer = new Lecturer();
+                Room room = new Room();
+                Group group = new Group();
+                Subject subject = new Subject();
+                TimeSlot timeSlot =  new TimeSlot();
+                Student student =  new Student();
+                
+                session.setAttanded(rs.getBoolean("attanded"));
+                session.setIndex(rs.getInt("index"));
+                session.setSessionId(rs.getInt("sessionID"));
+                session.setDate(rs.getDate("date"));
+                
+                lecturer.setLecturerId(rs.getString("lectureID"));
+                lecturer.setLecturerName(rs.getString("lectureName"));
+                
+                room.setRoomName(rs.getString("roomName"));
+                
+                group.setGroupId(rs.getString("groupID"));
+                group.setGroupName(rs.getString("groupName"));
+                
+                subject.setSubjectId(rs.getString("subjectID"));
+                subject.setSubjectName(rs.getString("subjectName"));
+                
+                timeSlot.setId(rs.getInt("timeSlotID"));
+                timeSlot.setDescription(rs.getString("description"));
+                
+                student.setStudentId(rs.getString("studentID"));
+                student.setStudentName(rs.getString("studentName"));
+                
+                group.setSubject(subject);
+                session.setRoom(room);
+                session.setGroup(group);
+                session.setLecturer(lecturer);
+                session.setTimeSlot(timeSlot);
+                
+                sessions.add(session);
+            }
+            return sessions;
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
