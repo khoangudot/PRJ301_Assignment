@@ -11,12 +11,13 @@ import Models.Room;
 import Models.Session;
 import Models.Subject;
 import Models.TimeSlot;
-import com.sun.istack.internal.logging.Logger;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Date;
+
 import java.util.logging.Level;
 
 /**
@@ -129,8 +130,8 @@ public class SessionDBContext extends DBContext<Session> {
                         + "           ,?\n"
                         + "           ,?\n"
                         + "           ,GETDATE())";
-                PreparedStatement stmInsert =  connection.prepareStatement(sqlInsert);
-                stmInsert.setInt(1,model.getSessionId());
+                PreparedStatement stmInsert = connection.prepareStatement(sqlInsert);
+                stmInsert.setInt(1, model.getSessionId());
                 stmInsert.setString(2, attandance.getStudent().getStudentId());
                 stmInsert.setBoolean(3, attandance.isPresent());
                 stmInsert.setString(4, attandance.getDescription());
@@ -144,14 +145,78 @@ public class SessionDBContext extends DBContext<Session> {
                 java.util.logging.Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
             java.util.logging.Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, e);
-        }
-        finally{
+        } finally {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException ex) {
                 java.util.logging.Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-               
+
+    }
+
+    public ArrayList<Session> filterSession(String lecturerId, Date from, Date to) {
+        ArrayList<Session> sessions = new ArrayList<>();
+        String sql = "select ses.sessionID,ses.[date],ses.[index],ses.attanded, \n"
+                + "l.lectureID,l.lectureName,l.username,g.groupID,g.groupName,\n"
+                + "sub.subjectID,sub.subjectName,\n"
+                + "r.roomName,g.groupName,ts.timeSlotID,ts.[description]\n"
+                + "from [Session] ses\n"
+                + "INNER JOIN Lecturer l ON ses.lectureID = l.lectureID\n"
+                + "INNER JOIN Room r ON ses.roomID = r.roomID\n"
+                + "INNER JOIN [Group] g ON g.groupID = ses.groupID\n"
+                + "INNER JOIN [Subject] sub ON sub.subjectID = g.subjectID\n"
+                + "INNER JOIN TimeSlot ts ON ts.timeSlotID = ses.timeSlotID\n"
+                + "where l.lectureID = ?\n"
+                + "AND ses.[date] >= ?\n"
+                + "AND ses.[date] <= ?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, lecturerId);
+            stm.setDate(2, (java.sql.Date) from);
+            stm.setDate(3, (java.sql.Date) to);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Session session = new Session();
+                Lecturer lecturer = new Lecturer();
+                Room room = new Room();
+                Group group = new Group();
+                Subject subject = new Subject();
+                TimeSlot timeSlot = new TimeSlot();
+
+                session.setSessionId(rs.getInt("sessionID"));
+                session.setDate(rs.getDate("date"));
+                session.setIndex(rs.getInt("index"));
+                session.setAttanded(rs.getBoolean("attanded"));
+
+                lecturer.setLecturerId(rs.getString("lectureID"));
+                lecturer.setLecturerName(rs.getString("lectureName"));
+
+                room.setRoomName(rs.getString("roomName"));
+
+                group.setGroupId(rs.getString("groupID"));
+                group.setGroupName(rs.getString("groupName"));
+
+                subject.setSubjectId(rs.getString("subjectID"));
+                subject.setSubjectName(rs.getString("subjectName"));
+
+                timeSlot.setId(rs.getInt("timeSlotID"));
+                timeSlot.setDescription(rs.getString("description"));
+
+                group.setSubject(subject);
+                session.setGroup(group);
+                session.setLecturer(lecturer);
+                session.setRoom(room);
+                session.setTimeSlot(timeSlot);
+                
+                sessions.add(session);
+
+            }
+            return sessions;
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
     }
 }

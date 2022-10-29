@@ -9,8 +9,8 @@
         <servlet-class>Controllers.Login.LoginController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>NewServlet</servlet-name>
-        <servlet-class>Controllers.Lecturer.NewServlet</servlet-class>
+        <servlet-name>TimeTableController</servlet-name>
+        <servlet-class>Controllers.Lecturer.TimeTableController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TakeAttandanceController</servlet-name>
@@ -21,8 +21,8 @@
         <url-pattern>/Login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>NewServlet</servlet-name>
-        <url-pattern>/123</url-pattern>
+        <servlet-name>TimeTableController</servlet-name>
+        <url-pattern>/timetable</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

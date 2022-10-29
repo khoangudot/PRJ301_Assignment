@@ -103,7 +103,7 @@
                                         <input style="border-top-style: hidden; border-bottom-style: groove; border-left-style: hidden; border-right-style: hidden; background-color: #eee" 
                                                type="" name="description${a.student.studentId}" value="${a.description}">
                                     </td>
-                                    <td style="width:5%">${requestScope.session.attanded ? requestScope.session.lecturer.lecturerId: "No"}</td>    
+                                    <td style="width:5%">${ requestScope.session.lecturer.lecturerId}</td>    
                                     <td style="width:20%">${a.recordTime}</td>
                                 </tr>
                             </c:forEach>

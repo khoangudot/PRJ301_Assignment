@@ -26,7 +26,9 @@
 <link rel="Stylesheet" href="../Style/Content/bootstrap.css" type="text/css" />
 <link rel="Stylesheet" href="../Style/Content/bootstrap.min.css" type="text/css" />
 <link rel="Stylesheet" href="../Style/Content/bootstrap-theme.min.css" type="text/css" />
+
 <style type="text/css">
+
         .style1 {
             font-weight: bold;
         }
