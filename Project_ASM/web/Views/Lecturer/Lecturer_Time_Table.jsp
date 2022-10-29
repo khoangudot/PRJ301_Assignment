@@ -74,12 +74,12 @@
 </div>
 <div id="ctl00_divUser" style="float: right; margin-right: 16px;">
 <a href="?view=user">
-<span id="ctl00_lblLogIn" class="label label-success">khoanvhe153692</span></a> | <a href="?logout=true" class="label label-success">logout</a> |
+    <span id="ctl00_lblLogIn" class="label label-success">${requestScope.lecturer.lecturerId}</span></a> | <a href="logout" class="label label-success">logout</a> |
 <span id="ctl00_lblCampusName" class="label label-success"> CAMPUS: FPTU-Hòa Lạc</span>
 </div>
 <ol class="breadcrumb">
 <li>
-<span id="ctl00_lblNavigation"><a href='../Student.aspx'>Home</a>&nbsp;|&nbsp;<b>View Schedule</b></span></li>
+    <span id="ctl00_lblNavigation"><a href='Views/Home/Home.jsp' style="color: ">Home</a> <b>View Schedule</b></span></li>
 </ol>
 <table>
 <tr style="border-bottom: 0 none">
@@ -129,27 +129,9 @@
         }
     </style>
 <h2>Activities for
-<span id="ctl00_mainContent_lblStudent">KhoaNVHE153692 (Nguyễn Việt Khoa)</span></h2>
-<p>
-<b>Note</b>: These activities do not include extra-curriculum activities, such as
-club activities ...
-</p>
-<p>
-<b>Chú thích</b>: Các hoạt động trong bảng dưới không bao gồm hoạt động ngoại khóa,
-ví dụ như hoạt động câu lạc bộ ...
-</p>
-<div id="ctl00_mainContent_ghichu">
-<p>
-Các phòng bắt đầu bằng AL thuộc tòa nhà Alpha. VD: AL...<br />
-Các phòng bắt đầu bằng BE thuộc tòa nhà Beta. VD: BE,..<br />
-Các phòng bắt đầu bằng G thuộc tòa nhà Gamma. VD: G201,...<br />
-Các phòng tập bằng đầu bằng R thuộc khu vực sân tập Vovinam.<br />
-Các phòng bắt đầu bằng DE thuộc tòa nhà Delta. VD: DE,..<br />
-Little UK (LUK) thuộc tầng 5 tòa nhà Delta
-</p>
-    
-    <%--Code--%>
-</div>
+<span id="ctl00_mainContent_lblStudent"> ${param.lecturerId} (${requestScope.lecturer.lecturerName})</span></h2>
+
+
  Lecturer: <input type="text" readonly="readonly" value="${requestScope.lecturer.lecturerName}"/>
         <form action="timetable" method="get">
             <input type="hidden" name="lecturerId" value="${param.lecturerId}"/>
@@ -188,12 +170,7 @@ Little UK (LUK) thuộc tầng 5 tòa nhà Delta
                 </tr>
             </c:forEach>
         </table>
-<p>
-<b>More note / Chú thích thêm</b>:
-</p>
-<div id="ctl00_mainContent_divfoot"><ul><li>(<font color='green'>attended</font>): KhoaNVHE153692 had attended this activity / Nguyễn Việt Khoa đã tham gia hoạt động này</li><li>(<font color='red'>absent</font>): KhoaNVHE153692 had NOT attended this activity / Nguyễn Việt Khoa đã vắng mặt buổi này</li> <li>(-): no data was given / chưa có dữ liệu</li> </ul></div>
-<p>
-</p>
+
 </div>
 </td>
 </tr>
