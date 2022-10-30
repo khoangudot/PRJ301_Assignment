@@ -69,7 +69,8 @@
 
                     <div id="ctl00_divUser" style="float: right; margin-right: 16px;">
                         <a href="?view=user">
-                            <span id="ctl00_lblLogIn" class="label label-success">${sessionScope.account.username}</span></a> | <a href="?logout=true" class="label label-success">logout</a> |
+                            <span id="ctl00_lblLogIn" class="label label-success">${sessionScope.account.username}</span></a> 
+                            | <a href="logout" class="label label-success">Logout</a> |
                         <span id="ctl00_lblCampusName" class="label label-success"> CAMPUS: FPTU-Hòa Lạc</span>
                     </div>
                     <ol class="breadcrumb">
@@ -173,7 +174,18 @@
 
                                                                                     <li><a href="Course/Courses.aspx">University timetable </a>(Lịch học)</li>
                                                                                     <li><a href="FrontOffice/SubjectFees.aspx">Tuition fee per course</a> (Biểu học phí)</li>
-                                                                                    <li><a href="../../timetable?lecturerId=sonnt5">Weekly timetable</a> (Thời khóa biểu từng tuần)</li>
+                                                                                    <c:if test="${requestScope.student != null}">
+                                                                                        <li>
+                                                                                            <a href="student/timetable?studentId=${requestScope.student.studentId}">Weekly timetable </a>
+                                                                                        </li>
+                                                                                   </c:if>     
+                                                                                            
+                                                                                       <c:if test="${requestScope.student != null}" >
+                                                                                        <li>
+                                                                                            <a href="timetable?lecturerId=${requestScope.lecturer.lecturerId}">Weekly timetable </a>
+                                                                                        </li>
+                                                                                   </c:if> 
+                                                                                    
                                                                                     <li><a href="Schedule/FunixSchedule.aspx">Blended Online Course (BLOC) Schedules </a>(Lịch học các môn theo phương pháp BLOC trong kỳ)</li>
                                                                                     <li><a href="Schedule/TimeTable.aspx">Class timetable</a> (Xem thời khóa biểu của một lớp)</li>
                                                                                     <li><a href="Exam/ScheduleExams.aspx" target="_blank">View exam schedule </a>(Xem lịch thi)

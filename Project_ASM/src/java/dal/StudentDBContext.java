@@ -50,8 +50,28 @@ public class StudentDBContext extends DBContext<Student> {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, studentId);
             ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Student student = new Student();
+                student.setStudentId(rs.getString("studentID"));
+                student.setStudentName(rs.getString("studentName"));
+                return student;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Student getStudentByUsername(String username) {
+        try {
+            String sql = "Select s.username,s.studentID,s.studentName from Account a \n"
+                    + "INNER JOIn Student s  ON a.username = s.username\n"
+                    + "WHERE s.username = ? ";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
             if(rs.next()){
-                Student student = new  Student();
+                Student student = new Student();
                 student.setStudentId(rs.getString("studentID"));
                 student.setStudentName(rs.getString("studentName"));
                 return student;

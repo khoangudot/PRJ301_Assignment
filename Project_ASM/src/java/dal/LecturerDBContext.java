@@ -5,6 +5,7 @@
 package dal;
 
 import Models.Lecturer;
+import Models.Student;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author MrKhoaz
  */
-public class LecturerDBContext extends DBContext<Lecturer>{
+public class LecturerDBContext extends DBContext<Lecturer> {
 
     @Override
     public void insert(Lecturer model) {
@@ -42,14 +43,15 @@ public class LecturerDBContext extends DBContext<Lecturer>{
     public ArrayList<Lecturer> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    public  Lecturer getLecturerById(String lecturerId){
-       
+
+    public Lecturer getLecturerById(String lecturerId) {
+
         try {
-             String sql  =  "Select lectureID,lectureName from Lecturer where lectureID = ?";
-            PreparedStatement stm =  connection.prepareStatement(sql);
-            stm.setString(1,lecturerId );
+            String sql = "Select lectureID,lectureName from Lecturer where lectureID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, lecturerId);
             ResultSet rs = stm.executeQuery();
-            if(rs.next() ){
+            if (rs.next()) {
                 Lecturer lecturer = new Lecturer();
                 lecturer.setLecturerId(rs.getString("lectureID"));
                 lecturer.setLecturerName(rs.getString("lectureName"));
@@ -58,7 +60,27 @@ public class LecturerDBContext extends DBContext<Lecturer>{
         } catch (SQLException ex) {
             Logger.getLogger(LecturerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+        return null;
+    }
+
+    public Lecturer getLecturerByUsername(String username) {
+        try {
+            String sql = "Select l.username,l.lectureID,l.lectureName from Account a \n"
+                    + "INNER JOIn Lecturer l  ON a.username = l.username\n"
+                    + "WHERE l.username = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Lecturer lecturer = new Lecturer();
+                lecturer.setLecturerId(rs.getString("lectureID"));
+                lecturer.setLecturerName(rs.getString("lectureName"));
+                return lecturer;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
 }

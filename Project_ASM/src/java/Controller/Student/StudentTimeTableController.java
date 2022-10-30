@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers.Login;
+package Controller.Student;
 
-import Models.Account;
 import Models.Lecturer;
-import Models.Role;
+import Models.Session;
 import Models.Student;
-import dal.AccountDBContext;
+import Models.TimeSlot;
 import dal.LecturerDBContext;
+import dal.SessionDBContext;
 import dal.StudentDBContext;
+import dal.TimeSlotDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,12 +19,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Date;
+import util.DateTimeHelper;
 
 /**
  *
  * @author MrKhoaz
  */
-public class LoginController extends HttpServlet {
+public class StudentTimeTableController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,8 +39,39 @@ public class LoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("Views/login/Default.jsp").forward(request, response);
+        String studentId = request.getParameter("studentId");
+        String raw_from = request.getParameter("from");
+        String raw_to = request.getParameter("to");
+        java.sql.Date from = null;
+        java.sql.Date to = null;
+        if (raw_from == null || raw_from.length() == 0) {
+            Date today = new Date();
+            int todayOfWeek = DateTimeHelper.getDayofWeek(today);
+            Date e_from = DateTimeHelper.addDays(today, 2 - todayOfWeek);
+            Date e_to = DateTimeHelper.addDays(today, 8 - todayOfWeek);
+            from = DateTimeHelper.toDateSql(e_from);
+            to = DateTimeHelper.toDateSql(e_to);
+        } else {
+            from = java.sql.Date.valueOf(raw_from);
+            to = java.sql.Date.valueOf(raw_to);
+        }
+        request.setAttribute("from", from);
+        request.setAttribute("to", to);
+        request.setAttribute("dates", DateTimeHelper.getDateList(from, to));
+
+        TimeSlotDBContext timeSlotDB = new TimeSlotDBContext();
+        ArrayList<TimeSlot> timeSlots = timeSlotDB.getAllTimeSlot();
+        request.setAttribute("timeSlots", timeSlots);
+
+        SessionDBContext sessionDB = new SessionDBContext();
+        ArrayList<Session> sessions = sessionDB.filterSessionForStudentTimeTable(studentId, from, to);
+        request.setAttribute("sessions", sessions);
+
+        StudentDBContext studentDB =  new StudentDBContext();
+        Student student = studentDB.getStudentById(studentId);
+        request.setAttribute("student", student);
+        
+        request.getRequestDispatcher("../Views/Student/Student_Time_Table.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,34 +100,8 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        AccountDBContext accDB = new AccountDBContext();
-        StudentDBContext stuDB = new StudentDBContext();
-        LecturerDBContext lecDB = new LecturerDBContext();
-        Account account = accDB.getAccount(username, password);
-        if (account != null) {
-            request.getSession().setAttribute("account", account);
-            
-            Student student = new Student();
-            Lecturer lecturer = new Lecturer();
-            
-            for (Role role : account.getRoles()) {
-                if (role.getRoleName().equals("lecturer")) {
-                    lecturer = lecDB.getLecturerByUsername(username);
-                    request.setAttribute("lecturer", lecturer);
-                } if(role.getRoleName().equals("student")){
-                    student = stuDB.getStudentByUsername(username);
-                    request.setAttribute("student", student);
-                }
-            }
-            request.getRequestDispatcher("Views/Home/Home.jsp").forward(request, response);
-        } else {
-            response.getWriter().println("Login fails");
-        }
-
+        processRequest(request, response);
     }
-   
 
     /**
      * Returns a short description of the servlet.

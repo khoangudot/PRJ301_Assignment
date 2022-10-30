@@ -31,7 +31,7 @@ public class TakeAttandanceController extends HttpServlet {
         AttandanceDBContext attandanceDB = new AttandanceDBContext();
         ArrayList<Attandance> attandances =  attandanceDB.getAttandancesBySessionId(sessionId);
         request.setAttribute("attandances", attandances);
-        
+       
         SessionDBContext sessionDB =  new SessionDBContext();
         Session session =  sessionDB.getSessionById(sessionId);
         request.setAttribute("session", session);

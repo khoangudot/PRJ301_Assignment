@@ -74,12 +74,12 @@
 </div>
 <div id="ctl00_divUser" style="float: right; margin-right: 16px;">
 <a href="?view=user">
-<span id="ctl00_lblLogIn" class="label label-success">khoanvhe153692</span></a> | <a href="?logout=true" class="label label-success">logout</a> |
+    <span id="ctl00_lblLogIn" class="label label-success">${requestScope.student.studentId}</span></a> | <a href="../logout" class="label label-success">Logout</a> |
 <span id="ctl00_lblCampusName" class="label label-success"> CAMPUS: FPTU-Hòa Lạc</span>
 </div>
 <ol class="breadcrumb">
 <li>
-<span id="ctl00_lblNavigation"><a href='../Student.aspx'>Home</a>&nbsp;|&nbsp;<b>View Schedule</b></span></li>
+<span id="ctl00_lblNavigation"><a href=''>Home</a>&nbsp;|&nbsp;<b>View Schedule</b></span></li>
 </ol>
 <table>
 <tr style="border-bottom: 0 none">
@@ -148,7 +148,7 @@ Các phòng bắt đầu bằng DE thuộc tòa nhà Delta. VD: DE,..<br />
 Little UK (LUK) thuộc tầng 5 tòa nhà Delta
 </p>
 </div>
- Lecturer: <input type="text" readonly="readonly" value="${requestScope.student.studentName}"/>
+
         <form action="../student/timetable" method="get">
             <input type="hidden" name="studentId" value="${param.studentId}"/>
             From: <input type="date" name="from" value="${requestScope.from}"/>
@@ -171,7 +171,8 @@ Little UK (LUK) thuộc tầng 5 tòa nhà Delta
                                 <c:if test="${helper.compare(ses.date,d) eq 0 and (ses.timeSlot.id eq slot.id)}">
                                     <a href="">${ses.group.groupName}-${ses.group.subject.subjectName}</a>
                                     <br/>
-                                    At ${ses.room.roomName}
+                                    At ${ses.room.roomName} (${ses.timeSlot.description})<br/>
+                                    
                                     <c:if test="${ses.attanded}">
                                         <img src="" alt=""/>
                                     </c:if>

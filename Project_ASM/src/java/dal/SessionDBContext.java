@@ -223,7 +223,7 @@ public class SessionDBContext extends DBContext<Session> {
     }
 
     public ArrayList<Session> filterSessionForStudentTimeTable(String studentId, Date from, Date to) {
-        ArrayList<Session> sessions =  new ArrayList<>();
+        ArrayList<Session> sessions = new ArrayList<>();
         try {
             String sql = "select ses.sessionID,ses.[date],ses.[index],ses.attanded,\n"
                     + "                l.lectureID,l.lectureName,l.username,g.groupID,g.groupName,\n"
@@ -246,43 +246,43 @@ public class SessionDBContext extends DBContext<Session> {
             stm.setDate(2, (java.sql.Date) from);
             stm.setDate(3, (java.sql.Date) to);
             ResultSet rs = stm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Session session = new Session();
                 Lecturer lecturer = new Lecturer();
                 Room room = new Room();
                 Group group = new Group();
                 Subject subject = new Subject();
-                TimeSlot timeSlot =  new TimeSlot();
-                Student student =  new Student();
-                
+                TimeSlot timeSlot = new TimeSlot();
+                Student student = new Student();
+
                 session.setAttanded(rs.getBoolean("attanded"));
                 session.setIndex(rs.getInt("index"));
                 session.setSessionId(rs.getInt("sessionID"));
                 session.setDate(rs.getDate("date"));
-                
+
                 lecturer.setLecturerId(rs.getString("lectureID"));
                 lecturer.setLecturerName(rs.getString("lectureName"));
-                
+
                 room.setRoomName(rs.getString("roomName"));
-                
+
                 group.setGroupId(rs.getString("groupID"));
                 group.setGroupName(rs.getString("groupName"));
-                
+
                 subject.setSubjectId(rs.getString("subjectID"));
                 subject.setSubjectName(rs.getString("subjectName"));
-                
+
                 timeSlot.setId(rs.getInt("timeSlotID"));
                 timeSlot.setDescription(rs.getString("description"));
-                
+
                 student.setStudentId(rs.getString("studentID"));
                 student.setStudentName(rs.getString("studentName"));
-                
+
                 group.setSubject(subject);
                 session.setRoom(room);
                 session.setGroup(group);
                 session.setLecturer(lecturer);
                 session.setTimeSlot(timeSlot);
-                
+
                 sessions.add(session);
             }
             return sessions;
@@ -292,4 +292,25 @@ public class SessionDBContext extends DBContext<Session> {
 
         return null;
     }
+
+    public int getNumberOfSlot(String subjectId) {
+        try {
+            int numOfSlot = 0;
+            String sql = "select MAX(ses.[index]) numOfSlot from [session] ses\n"
+                    + "INNER JOIN [Group] g ON ses.groupID = g.groupId\n"
+                    + "where g.subjectId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, subjectId);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                numOfSlot = rs.getInt("numOfSlot");
+            }
+            return numOfSlot;
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+   
+ 
 }
