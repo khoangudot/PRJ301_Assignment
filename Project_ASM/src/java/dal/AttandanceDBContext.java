@@ -74,17 +74,18 @@ public class AttandanceDBContext extends DBContext<Attandance> {
         ArrayList<Attandance> studentAttandances = new ArrayList<>();
         try {
 
-            String sql = "Select att.studentID, s.studentName, g.subjectID,\n"
-                    + "ses.sessionID,ses.[index], ses.[date] , ses.timeSlotID, slot.[description],ses.attanded,\n"
-                    + "r.roomName,r.roomID,ses.lectureID,g.groupName,g.groupID,att.present,att.[description] AS [comment], att.RecordTime\n"
-                    + "from  Attandance att\n"
-                    + "INNER join [Session] ses ON att.sessionID =ses.sessionID\n"
-                    + "INNER JOIN [Group] g ON g.groupID = ses.groupID\n"
-                    + "Inner JOIN Student s ON att.studentID =  s.studentID\n"
-                    + "INNER JOIN TimeSlot slot ON ses.timeSlotID = slot.timeSlotID\n"
-                    + "INNER JOIN Room r ON ses.roomID = r.roomID\n"
-                    + "WHERE att.studentID =? "
-                    + "AND  g.subjectID = ?";
+            String sql = "Select att.studentID, std.studentName, gr.subjectID,\n"
+                    + "                    ses.sessionID,ses.[index], ses.[date] , ses.timeSlotID, slot.[description],ses.attanded,\n"
+                    + "                    r.roomName,r.roomID,ses.lectureID,gr.groupName,gr.groupID,att.present,att.[description] AS [comment], att.RecordTime\n"
+                    + "                    from [Session] ses \n"
+                    + "                    INNER JOIN [Group] gr ON ses.groupID = gr.groupID \n"
+                    + "                    INNER JOIN Student_Group sg ON gr.groupID = sg.groupID\n"
+                    + "                    INNER JOIN Student std ON sg.studentID = std.studentID\n"
+                    + "					INNER JOIN Room r ON ses.roomID = r.roomID\n"
+                    + "					INNER JOIN TimeSlot slot ON slot.timeslotID = ses.timeSlotID\n"
+                    + "                    LEFT JOIN Attandance att ON ses.sessionID = att.sessionID \n"
+                    + "					AND att.studentID = std.studentID\n"
+                    + "					where std.studentID= ? AND gr.subjectId = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, studentId);
             stm.setString(2, subjectId);
@@ -138,9 +139,9 @@ public class AttandanceDBContext extends DBContext<Attandance> {
     }
 
     public int getNumOfAbsent(String studentId, String subjectId) {
-       
+
         try {
-             int numOfAbsent = 0;
+            int numOfAbsent = 0;
             String sql = "Select COUNT(att.present) as NumOfAbsent\n"
                     + "from  Attandance att\n"
                     + "INNER join [Session] ses ON att.sessionID =ses.sessionID\n"
@@ -154,7 +155,7 @@ public class AttandanceDBContext extends DBContext<Attandance> {
             stm.setString(2, subjectId);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-              numOfAbsent = rs.getInt("NumOfAbsent");
+                numOfAbsent = rs.getInt("NumOfAbsent");
             }
             return numOfAbsent;
         } catch (SQLException ex) {
@@ -162,7 +163,7 @@ public class AttandanceDBContext extends DBContext<Attandance> {
         }
         return 0;
     }
-   
+
     @Override
     public void insert(Attandance model) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

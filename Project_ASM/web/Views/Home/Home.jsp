@@ -174,13 +174,13 @@
 
                                                                                     <li><a href="Course/Courses.aspx">University timetable </a>(Lịch học)</li>
                                                                                     <li><a href="FrontOffice/SubjectFees.aspx">Tuition fee per course</a> (Biểu học phí)</li>
-                                                                                    <c:if test="${requestScope.student != null}">
+                                                                                    <c:if test="${requestScope.student != null }">
                                                                                         <li>
                                                                                             <a href="student/timetable?studentId=${requestScope.student.studentId}">Weekly timetable </a>
                                                                                         </li>
                                                                                    </c:if>     
                                                                                             
-                                                                                       <c:if test="${requestScope.student != null}" >
+                                                                                       <c:if test="${requestScope.lecturer != null}" >
                                                                                         <li>
                                                                                             <a href="timetable?lecturerId=${requestScope.lecturer.lecturerId}">Weekly timetable </a>
                                                                                         </li>

@@ -4,6 +4,7 @@
  */
 package dal;
 
+import Models.Account;
 import Models.Lecturer;
 import Models.Student;
 import java.sql.PreparedStatement;
@@ -64,18 +65,19 @@ public class LecturerDBContext extends DBContext<Lecturer> {
         return null;
     }
 
-    public Lecturer getLecturerByUsername(String username) {
+    public Lecturer getLecturerByAccount(Account account) {
         try {
             String sql = "Select l.username,l.lectureID,l.lectureName from Account a \n"
                     + "INNER JOIn Lecturer l  ON a.username = l.username\n"
                     + "WHERE l.username = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, username);
+            stm.setString(1, account.getUsername());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 Lecturer lecturer = new Lecturer();
                 lecturer.setLecturerId(rs.getString("lectureID"));
                 lecturer.setLecturerName(rs.getString("lectureName"));
+                lecturer.setAccount(account);
                 return lecturer;
             }
         } catch (SQLException ex) {

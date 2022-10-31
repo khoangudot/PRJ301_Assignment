@@ -80,10 +80,10 @@ public class LoginController extends HttpServlet {
             
             for (Role role : account.getRoles()) {
                 if (role.getRoleName().equals("lecturer")) {
-                    lecturer = lecDB.getLecturerByUsername(username);
+                    lecturer = lecDB.getLecturerByAccount(account);
                     request.setAttribute("lecturer", lecturer);
                 } if(role.getRoleName().equals("student")){
-                    student = stuDB.getStudentByUsername(username);
+                    student = stuDB.getStudentByAcount(account);
                     request.setAttribute("student", student);
                 }
             }
@@ -93,7 +93,7 @@ public class LoginController extends HttpServlet {
         }
 
     }
-   
+    
 
     /**
      * Returns a short description of the servlet.

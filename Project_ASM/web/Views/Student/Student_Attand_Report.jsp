@@ -110,15 +110,25 @@
                                                                                         </td><td><span class='label label-danger'>Slot ${attReport.session.timeSlot.id}(${attReport.session.timeSlot.description})</span>
                                                                                         </td><td>${attReport.session.room.roomName}</td><td>${attReport.session.lecturer.lecturerId}</td>
                                                                                         <td>${attReport.session.group.groupName}</td>
+                                                                                        
+                                                                                         <c:if test="${attReport.session.attanded}">
                                                                                         <td>
-                                                                                            
+                                                                                           
                                                                                                 <c:if test="${!attReport.present}">
                                                                                                         <font color=red>Absent</font>
                                                                                                  </c:if>
                                                                                                  <c:if test="${attReport.present}">
-                                                                                                 <font color="blue">Attended</font>
+                                                                                                 <font color="green">Attended</font>
                                                                                                  </c:if>
+                                                                                            
                                                                                         </td>
+                                                                                        </c:if>
+                                                                                             <c:if test="${!attReport.session.attanded}">
+                                                                                        <td>
+                                                                                               <font color="blue">Future</font>
+                                                                                        </td>
+                                                                                        </c:if>
+                                                                                        
                                                                                         <td>${attReport.description}</td>
                                                                                     </tr>
                                                                                 </c:forEach>
