@@ -174,16 +174,16 @@
 
                                                                                     <li><a href="Course/Courses.aspx">University timetable </a>(Lịch học)</li>
                                                                                     <li><a href="FrontOffice/SubjectFees.aspx">Tuition fee per course</a> (Biểu học phí)</li>
-                                                                                    <c:if test="${requestScope.student != null }">
-                                                                                        <li>
+                                                                                    <c:if test="${requestScope.student eq null }">
+                                                                                        
                                                                                             <a href="student/timetable?studentId=${requestScope.student.studentId}">Weekly timetable </a>
-                                                                                        </li>
+                                                                                        </
                                                                                    </c:if>     
                                                                                             
-                                                                                       <c:if test="${requestScope.lecturer != null}" >
-                                                                                        <li>
-                                                                                            <a href="timetable?lecturerId=${requestScope.lecturer.lecturerId}">Weekly timetable </a>
-                                                                                        </li>
+                                                                                       <c:if test="${requestScope.lecturer eq null}" >
+                                                                                        
+                                                                                            <a href="timetable?lecturerId=${requestScope.lecturer.lecturerId}">(Thời khóa biểu từng tuần) </a>
+                                                                                        
                                                                                    </c:if> 
                                                                                     
                                                                                     <li><a href="Schedule/FunixSchedule.aspx">Blended Online Course (BLOC) Schedules </a>(Lịch học các môn theo phương pháp BLOC trong kỳ)</li>
@@ -215,7 +215,7 @@
                                                                             <td valign="top">
                                                                                 <h4>Reports(Báo cáo)</h4>
                                                                                 <ul>
-                                                                                    <li><a href="Report/ViewAttendstudent.aspx">Attendance report</a> (Báo cáo điểm danh)</li>
+                                                                                    <li><a href="student/subjects?studentId=${requestScope.student.studentId}">Attendance report</a> (Báo cáo điểm danh)</li>
                                                                                     <li><a href="Grade/StudentGrade.aspx">Mark Report</a> (Báo cáo điểm)</li>
                                                                                     <li><a href="Grade/StudentTranscript.aspx">Academic Transcript</a> (Báo cáo điểm)</li>
                                                                                     <li><a href="FrontOffice/StudentCurriculum.aspx">Curriculum</a> (Khung chương trình)</li>
